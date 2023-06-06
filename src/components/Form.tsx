@@ -1,19 +1,12 @@
 // type FormProps = {
 //   name = string,
-
 // }
 
-// Um input do tipo text com o texto Nome do serviço como label.
-// Um input do tipo text com o texto Login como label.
-// Um input do tipo password com o texto Senha como label.
-// Um input do tipo text com o texto URL como label.
-// Um button com o texto Cadastrar.
-// Um button com o texto Cancelar.
 function Form() {
   return (
     <form>
       <label htmlFor="name">
-        Nome
+        Nome do serviço
         <input type="text" name="name" id="name" />
       </label>
       <label htmlFor="login">
@@ -22,10 +15,10 @@ function Form() {
       </label>
       <label htmlFor="password">
         Senha
-        <input type="password" name="password" id="passowrd" />
+        <input type="password" name="password" id="password" />
       </label>
       <label htmlFor="url">
-        URL
+        url
         <input type="text" name="url" id="url" />
       </label>
       <button>Cadastrar</button>
