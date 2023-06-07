@@ -3,6 +3,10 @@ import React, { useState } from 'react';
 type FormProps = {
   onCancel: () => void;
 };
+// Classes para colocar na tag de formulário de senhas
+const valida1 = 'valid-password-check';
+const valida2 = 'invalid-password-check';
+// ----------------------------------END------------------
 
 function Form({ onCancel }: FormProps) {
   const [data, setData] = useState({
@@ -11,34 +15,35 @@ function Form({ onCancel }: FormProps) {
     password: '',
     url: '',
   });
-  const verifyPassword = () => { // Verificação de Senha com os parâmetros passados.
-    const { name, login, password } = data;
-    if (!name || !login || !password) {
-      // alert('Por favor, preencha todos os campos');
-      return false;
-    }
 
-    if (password.length < 8 || password.length > 16) {
-      // alert('A senha deve ter entre 8 e 16 caracteres');
-      return false;
-    }
+  const [validPassword, setValidPassword] = useState({ // Estado para validação de senha
+    length: false,
+    maxLength: false,
+    lettersAndNumbers: false,
+    specialCharacter: false,
+  });
 
-    if (!/[a-zA-Z]/.test(password) || !/\d/.test(password)) {
-      // alert('A senha deve conter letras e números');
-      return false;
-    }
+  const verifyPassword = () => { // Verifica se os parâmetros das senhas são de acordo e altera o estado caso não
+    const { password } = data;
 
-    if (!/[!@#$%^&*()]/.test(password)) {
-      console.log('A senha deve conter pelo menos um caractere especial');
-      return false;
-    }
+    const lengthValid = password.length >= 8;
+    const maxLengthValid = password.length <= 16;
+    const lettersAndNumbersValid = /[a-zA-Z]/.test(password) && /\d/.test(password);
+    const specialCharacterValid = /[!@#$%^&*()]/.test(password);
 
-    return true;
+    setValidPassword({
+      length: lengthValid,
+      maxLength: maxLengthValid,
+      lettersAndNumbers: lettersAndNumbersValid,
+      specialCharacter: specialCharacterValid,
+    });
+
+    return (
+      lengthValid && maxLengthValid && lettersAndNumbersValid && specialCharacterValid
+    );
   };
 
-  const [validPassword, setValidPassword] = useState(false);
-
-  const handleCancel = () => {
+  const handleCancel = () => { // Chama a função OnCancel para canelar o botão de cadastro
     onCancel(); // Chama a função de callback recebida pela prop onCancel
   };
 
@@ -48,10 +53,10 @@ function Form({ onCancel }: FormProps) {
       ...data,
       [id]: value,
     });
-    setValidPassword(verifyPassword());
+    verifyPassword();
   };
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => { // Faz com que não carregue a página no Submit
     e.preventDefault();
     // Depois que salvar vou adicionar aqui as informações para serem salvas
   };
@@ -71,6 +76,27 @@ function Form({ onCancel }: FormProps) {
         Senha
         <input type="password" name="password" id="password" onChange={ handleChange } />
       </label>
+      <div>
+        {(!validPassword.length &&
+          <p className={ validPassword.length ? valida1 : valida2 }>
+            Possuir 8 ou mais caracteres
+          </p>) }
+
+        {(!validPassword.maxLength &&
+          <p className={ validPassword.maxLength ? valida1 : valida2 }>
+            Possuir até 16 caracteres
+          </p>)}
+
+        {(!validPassword.lettersAndNumbers &&
+          <p className={ validPassword.lettersAndNumbers ? valida1 : valida2 }>
+            Possuir letras e números
+          </p>)}
+
+        {(!validPassword.specialCharacter &&
+          <p className={ validPassword.specialCharacter ? valida1 : valida2 }>
+            Possuir algum caractere especial
+          </p>)}
+      </div>
       <label htmlFor="url">
         url
         <input type="text" name="url" id="url" onChange={ handleChange } />
