@@ -1,16 +1,18 @@
 import React, { useState } from 'react';
 
-// type FormProps = {
-//   name = string,
-// }
-
-function Form() {
+type FormProps = {
+  onCancel: () => void;
+};
+function Form({ onCancel }: FormProps) {
   const [data, setData] = useState({
     name: '',
     login: '',
     password: '',
     url: '',
   });
+  const handleCancel = () => {
+    onCancel(); // Chama a função de callback recebida pela prop onCancel
+  };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => { // Qualquer mudança nos inputs eles alteram o estado.
     const { id, value } = e.target;
@@ -44,8 +46,8 @@ function Form() {
         url
         <input type="text" name="url" id="url" onChange={ handleChange } />
       </label>
-      <button>Cadastrar</button>
-      <button>Cancelar</button>
+      <button type="submit">Cadastrar</button>
+      <button onClick={ handleCancel }>Cancelar</button>
     </form>
   );
 }
