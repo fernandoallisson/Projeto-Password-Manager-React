@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 type FormProps = {
   onCancel: () => void;
 };
+
 function Form({ onCancel }: FormProps) {
   const [data, setData] = useState({
     name: '',
@@ -10,6 +11,33 @@ function Form({ onCancel }: FormProps) {
     password: '',
     url: '',
   });
+  const verifyPassword = () => { // Verificação de Senha com os parâmetros passados.
+    const { name, login, password } = data;
+    if (!name || !login || !password) {
+      // alert('Por favor, preencha todos os campos');
+      return false;
+    }
+
+    if (password.length < 8 || password.length > 16) {
+      // alert('A senha deve ter entre 8 e 16 caracteres');
+      return false;
+    }
+
+    if (!/[a-zA-Z]/.test(password) || !/\d/.test(password)) {
+      // alert('A senha deve conter letras e números');
+      return false;
+    }
+
+    if (!/[!@#$%^&*()]/.test(password)) {
+      console.log('A senha deve conter pelo menos um caractere especial');
+      return false;
+    }
+
+    return true;
+  };
+
+  const [validPassword, setValidPassword] = useState(false);
+
   const handleCancel = () => {
     onCancel(); // Chama a função de callback recebida pela prop onCancel
   };
@@ -20,6 +48,7 @@ function Form({ onCancel }: FormProps) {
       ...data,
       [id]: value,
     });
+    setValidPassword(verifyPassword());
   };
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
@@ -46,7 +75,7 @@ function Form({ onCancel }: FormProps) {
         url
         <input type="text" name="url" id="url" onChange={ handleChange } />
       </label>
-      <button type="submit">Cadastrar</button>
+      <button type="submit" disabled={ !validPassword }>Cadastrar</button>
       <button onClick={ handleCancel }>Cancelar</button>
     </form>
   );

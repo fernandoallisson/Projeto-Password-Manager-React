@@ -18,7 +18,7 @@ function App() {
     setShowBtnCadastrar(true);
   };
 
-  return (
+  return ( // O própirio APP. O que será renderizado!
     <div>
       <header>
         <h1>Gerenciador de senhas</h1>
