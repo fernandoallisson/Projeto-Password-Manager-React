@@ -77,25 +77,29 @@ function Form({ onCancel }: FormProps) {
         <input type="password" name="password" id="password" onChange={ handleChange } />
       </label>
       <div>
-        {(!validPassword.length &&
+        {!validPassword.length && (
           <p className={ validPassword.length ? valida1 : valida2 }>
             Possuir 8 ou mais caracteres
-          </p>) }
+          </p>
+        )}
 
-        {(!validPassword.maxLength &&
+        {!validPassword.maxLength && (
           <p className={ validPassword.maxLength ? valida1 : valida2 }>
             Possuir até 16 caracteres
-          </p>)}
+          </p>
+        )}
 
-        {(!validPassword.lettersAndNumbers &&
+        {!validPassword.lettersAndNumbers && (
           <p className={ validPassword.lettersAndNumbers ? valida1 : valida2 }>
             Possuir letras e números
-          </p>)}
+          </p>
+        )}
 
-        {(!validPassword.specialCharacter &&
+        {!validPassword.specialCharacter && (
           <p className={ validPassword.specialCharacter ? valida1 : valida2 }>
             Possuir algum caractere especial
-          </p>)}
+          </p>
+        )}
       </div>
       <label htmlFor="url">
         url
