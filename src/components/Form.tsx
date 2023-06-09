@@ -27,7 +27,7 @@ function Form({ onCancel }: FormProps) {
     const { password } = data;
 
     const lengthValid = password.length >= 8;
-    const maxLengthValid = password.length <= 16;
+    const maxLengthValid = password.length <= 15;
     const lettersAndNumbersValid = /[a-zA-Z]/.test(password) && /\d/.test(password);
     const specialCharacterValid = /[!@#$%^&*()]/.test(password);
 
@@ -53,13 +53,16 @@ function Form({ onCancel }: FormProps) {
       ...data,
       [id]: value,
     });
-    verifyPassword();
+    if (id === 'password') {
+      verifyPassword();
+    }
   };
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => { // Faz com que não carregue a página no Submit
     e.preventDefault();
     // Depois que salvar vou adicionar aqui as informações para serem salvas
   };
+
   // ---------------------------------------------------------------------------------------
 
   return (
@@ -97,7 +100,15 @@ function Form({ onCancel }: FormProps) {
         url
         <input type="text" name="url" id="url" onChange={ handleChange } />
       </label>
-      <button type="submit" disabled={ !validPassword }>Cadastrar</button>
+      <button
+        type="submit"
+        disabled={ !(validPassword.length
+        && validPassword.maxLength
+        && validPassword.lettersAndNumbers
+        && validPassword.specialCharacter) }
+      >
+        Cadastrar
+      </button>
       <button onClick={ handleCancel }>Cancelar</button>
     </form>
   );
