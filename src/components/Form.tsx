@@ -26,7 +26,7 @@ function Form({ onCancel }: FormProps) {
   const verifyPassword = () => { // Verifica se os parâmetros das senhas são de acordo e altera o estado caso não
     const { password } = data;
 
-    const lengthValid = password.length >= 8;
+    const lengthValid = password.length >= 7;
     const maxLengthValid = password.length <= 15;
     const lettersAndNumbersValid = /[a-zA-Z]/.test(password) && /\d/.test(password);
     const specialCharacterValid = /[!@#$%^&*()]/.test(password);
@@ -60,7 +60,16 @@ function Form({ onCancel }: FormProps) {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => { // Faz com que não carregue a página no Submit
     e.preventDefault();
-    // Depois que salvar vou adicionar aqui as informações para serem salvas
+    const { name, login } = data;
+    const isNameEmpty = name.trim() === '';
+    const isLoginEmpty = login.trim() === '';
+    const isPasswordInvalid = !verifyPassword();
+
+    const isSubmitDisabled = isNameEmpty || isLoginEmpty || isPasswordInvalid;
+
+    if (!isSubmitDisabled) {
+      // Realizar o envio do formulário ou qualquer outra ação necessária
+    }
   };
 
   // ---------------------------------------------------------------------------------------
@@ -105,7 +114,9 @@ function Form({ onCancel }: FormProps) {
         disabled={ !(validPassword.length
         && validPassword.maxLength
         && validPassword.lettersAndNumbers
-        && validPassword.specialCharacter) }
+        && validPassword.specialCharacter
+        && data.name.trim() !== ''
+        && data.login.trim() !== '') }
       >
         Cadastrar
       </button>
