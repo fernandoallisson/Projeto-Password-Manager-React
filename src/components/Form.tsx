@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import FormCard from './Form-card';
 
 type FormProps = {
   onCancel: () => void;
@@ -71,22 +72,55 @@ function Form({ onCancel }: FormProps) {
       // Realizar o envio do formulário ou qualquer outra ação necessária
     }
   };
+  const [services, setServices] = useState([] as any[]);
 
+  const handleCadastro = () => {
+    if (data.name.trim() !== '' && data.login.trim() !== '') {
+      // Verifica se os campos obrigatórios foram preenchidos
+      const newService = {
+        login: data.login,
+        nome: data.name,
+        senha: data.password,
+        url: data.url,
+      };
+
+      setServices([...services, newService]); // Adiciona o novo serviço ao estado de serviços
+      setData({ name: '', login: '', password: '', url: '' }); // Limpa os campos do formulário
+    }
+  };
   // ---------------------------------------------------------------------------------------
 
   return (
     <form onSubmit={ handleSubmit }>
       <label htmlFor="name">
         Nome do serviço
-        <input type="text" name="name" id="name" onChange={ handleChange } />
+        <input
+          type="text"
+          name="name"
+          value={ data.name }
+          id="name"
+          onChange={ handleChange }
+        />
       </label>
       <label htmlFor="login">
         Login
-        <input type="text" name="login" id="login" onChange={ handleChange } />
+        <input
+          type="text"
+          name="login"
+          value={ data.login }
+          id="login"
+          onChange={ handleChange }
+        />
       </label>
       <label htmlFor="password">
         Senha
-        <input type="password" name="password" id="password" onChange={ handleChange } />
+        <input
+          type="password"
+          name="password"
+          id="password"
+          value={ data.password }
+          onChange={ handleChange }
+        />
       </label>
       <div>
         <p className={ validPassword.length ? valida1 : valida2 }>
@@ -107,7 +141,13 @@ function Form({ onCancel }: FormProps) {
       </div>
       <label htmlFor="url">
         url
-        <input type="text" name="url" id="url" onChange={ handleChange } />
+        <input
+          type="text"
+          name="url"
+          value={ data.url }
+          id="url"
+          onChange={ handleChange }
+        />
       </label>
       <button
         type="submit"
@@ -117,10 +157,28 @@ function Form({ onCancel }: FormProps) {
         && validPassword.specialCharacter
         && data.name.trim() !== ''
         && data.login.trim() !== '') }
+        onClick={ handleCadastro }
       >
         Cadastrar
       </button>
       <button onClick={ handleCancel }>Cancelar</button>
+      {/* Renderização dos serviços cadastrados */}
+      {services.length > 0 ? (
+        <div>
+          <h2>Serviços cadastrados:</h2>
+          {services.map((service, index) => (
+            <FormCard
+              key={ index }
+              login={ service.login }
+              nome={ service.nome }
+              senha={ service.senha }
+              url={ service.url }
+            />
+          ))}
+        </div>
+      ) : (
+        <p>Nenhuma senha cadastrada</p>
+      )}
     </form>
   );
 }

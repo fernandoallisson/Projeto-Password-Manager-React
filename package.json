@@ -12,7 +12,7 @@
     "node": "16 || 18"
   },
   "scripts": {
-    "dev": "vite --open",
+    "dev": "vite --host --open",
     "build": "tsc && vite build",
     "preview": "vite preview",
     "test": "vitest",
