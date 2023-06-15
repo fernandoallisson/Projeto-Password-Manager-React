@@ -1,34 +1,31 @@
 import { useState } from 'react';
 import './App.css';
 import Form from './components/Form';
+import Title from './components/Title';
+import BotaoCadastrar from './components/Botao';
 
 function App() {
-  // Estado para alterar a tela do componente para 'Show' --------------------------------------------------
-  const [cadastrar, setCadastrar] = useState(false);
-  // Estado para alterar a visibilidade do 'botão cadastrar nova senha' ------------------------------------
-  const [showBtnCadastrar, setShowBtnCadastrar] = useState(true);
-  // Altera o estado de dois componentes / o de cadastrar e o de mostrar o btn -----------------------------
-  const handleCadastrar = () => {
-    setCadastrar(true);
-    setShowBtnCadastrar(false);
-  };
-  // Altera o estado de dois componentes / o de cadastrar e o de mostrar o btn -----------------------------
-  const handleCancel = () => {
-    setCadastrar(false);
-    setShowBtnCadastrar(true);
-  };
+// ------------------------Bloco de armazenamento de renderização -----------------------//
+  const [mostrarinformacoes, setMostrarInformacoes] = useState({ // Este estado vai armazenar o que deve ser renderizado (form ou botao)
+    botao: true,
+    formulario: false,
+  });
 
-  return ( // O própirio APP. O que será renderizado!
+  const handleChange = () => { // Esta função vai alterar o valor do estado neste bloco
+    setMostrarInformacoes((prevState) => ({
+      botao: !prevState.botao,
+      formulario: !prevState.formulario,
+    }));
+  };
+  // ---------------------------------- Fim do Bloco de renderização ---------------------//
+
+  return (
     <div>
-      <header>
-        <h1>Gerenciador de senhas</h1>
-      </header>
-      <section>
-        {showBtnCadastrar && (
-          <button onClick={ handleCadastrar }>Cadastrar nova senha</button>
-        )}
-        {cadastrar && <Form onCancel={ handleCancel } /> }
-      </section>
+      <Title titulo="Gerenciador de Senhas" />
+
+      {mostrarinformacoes.botao && <BotaoCadastrar onClick={ handleChange } />}
+
+      {mostrarinformacoes.formulario && <Form onClick={ handleChange } />}
     </div>
   );
 }

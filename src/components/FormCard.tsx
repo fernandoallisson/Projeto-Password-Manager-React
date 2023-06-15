@@ -8,11 +8,11 @@ type FormCardProps = {
 function FormCard(dados: FormCardProps) {
   const { nome, url, login, senha } = dados;
   return (
-    <div>
-      <a href={ url }>{ nome }</a>
+    <li>
+      <p><a href={ url }>{ nome }</a></p>
       <p>{ login }</p>
       <p>{ senha }</p>
-    </div>
+    </li>
   );
 }
 
