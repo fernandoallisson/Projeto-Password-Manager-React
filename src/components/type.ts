@@ -1,4 +1,5 @@
 export type FormTipo = {
+  id: string;
   name: string;
   url: string;
   login: string;
@@ -8,6 +9,7 @@ export type FormTipo = {
 
 export type DadosTipo = {
   dados: FormTipo[]
+  handleLixo: (event: React.MouseEvent<HTMLButtonElement>) => void
 };
 
 export type SenhaTipo = {

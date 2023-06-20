@@ -10,6 +10,7 @@ const noCadastrada = '';
 function ComponentePrincipal() {
   // Parte de Estados -------------------------------------------------------------------------------
   const [dadosDoForm, setDadosDoForm] = useState({ // estado para o formulário
+    id: '',
     name: '',
     login: '',
     password: '',
@@ -72,6 +73,7 @@ function ComponentePrincipal() {
   };
   const onClickDoLimparFormulario = () => {
     setDadosDoForm({
+      id: '',
       name: '',
       login: '',
       password: '',
@@ -90,7 +92,16 @@ function ComponentePrincipal() {
     onClickDoLimparFormulario();
     setMostrarBotaoOuForm(false);
   };
+  const handleLixo = (event: React.MouseEvent<HTMLButtonElement>) => {
+    const valorBotao = event.currentTarget.value;
+    const index = listaDeDados.findIndex((objeto) => objeto.login === valorBotao);
 
+    if (index !== -1) {
+      const novoArray = [...listaDeDados];
+      novoArray.splice(index, 1);
+      setListaDeDados(novoArray);
+    }
+  };
   return (
     <div>
       <section id="titulo">
@@ -116,7 +127,7 @@ function ComponentePrincipal() {
       </section>
       <section id="secao-senhas-cadastradas">
         {listaDeDados
-          && <ListaDeSenhaCadastrada dados={ listaDeDados } />}
+          && <ListaDeSenhaCadastrada dados={ listaDeDados } handleLixo={ handleLixo } />}
       </section>
     </div>
   );
