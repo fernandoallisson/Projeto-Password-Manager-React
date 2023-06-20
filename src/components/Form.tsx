@@ -1,83 +1,20 @@
-import { useState } from 'react';
-import SecaoSenha from './SecaoSenha';
+import { FormProp } from './type';
 
 const senhaValida = 'valid-password-check';
 const senhaInvalida = 'invalid-password-check';
 
-interface FormData {
-  name: string;
-  login: string;
-  password: string;
-  url: string;
-}
-
-interface SavedData {
-  data: FormData;
-}
-
-type FormProp = {
-  onClick: () => void;
-};
-
-function Form({ onClick }: FormProp) {
-  const [dadosSalvos, setDadosSalvos] = useState<SavedData[]>([]); // Aqui é para guardar o que deve ser guardado para ser feito o map depois;
-
-  const handleSubmit = (evento: React.FormEvent<HTMLFormElement>) => { // Prevenir que carregue
-    evento.preventDefault();
-  };
-  const [data, setData] = useState<FormData>({ // Para guardar as informações que o user digitar
-    name: '',
-    login: '',
-    password: '',
-    url: '',
-  });
-  const [senha, setSenha] = useState({ // Para ver se a senha tá OK!
-    tamanhoMinimo: false,
-    tamanhoMaximo: false,
-    temLetrasENumeros: false,
-    temCaracteresEspeciais: false,
-  });
-  const [SenhaValidaChecada, setSenhaValidaChecada] = useState(false);
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => { // Qualquer mudança nos inputs eles alteram o estado.
-    const { name, value } = e.target;
-    setData((prevState) => ({
-      ...prevState,
-      [name]: value,
-    }));
-  };
-  const handleChangeSenha = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const novaSenha = event.target.value;
-    const tamanhoMinimo = 8;
-    const tamanhoMaximo = 16;
-
-    setSenha((prevState) => ({
-      ...prevState,
-      tamanhoMinimo: novaSenha.length >= tamanhoMinimo,
-      tamanhoMaximo: novaSenha.length <= tamanhoMaximo,
-      temLetrasENumeros: /^(?=.*[a-zA-Z])(?=.*\d)/.test(novaSenha),
-      temCaracteresEspeciais: /[!@#$%^&*(),.?":{}|<>]/.test(novaSenha),
-    }));
-
-    setData((current) => ({
-      ...current,
-      password: novaSenha,
-    }));
-
-    const senhaValidada = novaSenha.length >= tamanhoMinimo
-    && novaSenha.length <= tamanhoMaximo
-    && /^(?=.*[a-zA-Z])(?=.*\d)/.test(novaSenha)
-    && /[!@#$%^&*(),.?":{}|<>]/.test(novaSenha);
-
-    setSenhaValidaChecada(senhaValidada);
-  };
-  const handleCadastroSenhas = () => {
-    setDadosSalvos((prevState) => [...prevState, { data }]);
-  };
-
+function Form({
+  dadosDoForm,
+  onClickDoCancelar,
+  handleChange,
+  onClickDoCadastrar,
+  handleChangeSenha,
+  SenhaValidaChecada,
+  senha,
+  onSubmit,
+}: FormProp) {
   return (
-
-    <form onSubmit={ handleSubmit }>
+    <form onSubmit={ onSubmit }>
       <section id="informacoesQueUsuarioDigita">
         <label htmlFor="nomedoservico">
           Nome do Serviço
@@ -85,7 +22,7 @@ function Form({ onClick }: FormProp) {
             type="text"
             id="nomedoservico"
             name="name"
-            value={ data.name }
+            value={ dadosDoForm.name }
             onChange={ handleChange }
           />
         </label>
@@ -95,7 +32,7 @@ function Form({ onClick }: FormProp) {
             type="text"
             id="usuario"
             name="login"
-            value={ data.login }
+            value={ dadosDoForm.login }
             onChange={ handleChange }
           />
         </label>
@@ -106,7 +43,7 @@ function Form({ onClick }: FormProp) {
               type="password"
               id="senha"
               name="password"
-              value={ data.password }
+              value={ dadosDoForm.password }
               onChange={ handleChangeSenha }
             />
           </label>
@@ -139,7 +76,7 @@ function Form({ onClick }: FormProp) {
             type="text"
             id="link"
             name="url"
-            value={ data.url }
+            value={ dadosDoForm.url }
             onChange={ handleChange }
           />
         </label>
@@ -147,24 +84,14 @@ function Form({ onClick }: FormProp) {
       <section id="botoesDoFormulario">
         <button
           disabled={ !(SenhaValidaChecada
-            && data.name.trim() !== ''
-          && data.login.trim() !== '') }
-          onClick={ handleCadastroSenhas }
+            && dadosDoForm.name.trim() !== ''
+          && dadosDoForm.login.trim() !== '') }
+          onClick={ onClickDoCadastrar }
         >
           Cadastrar
         </button>
 
-        <button onClick={ onClick }>Cancelar</button>
-      </section>
-      <section>
-        <SecaoSenha
-          dadosSalvos={ dadosSalvos }
-          login={ data.login }
-          name={ data.name }
-          password={ data.password }
-          url={ data.url }
-          key={ data.password }
-        />
+        <button onClick={ onClickDoCancelar }>Cancelar</button>
       </section>
     </form>
   );

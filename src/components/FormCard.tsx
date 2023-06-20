@@ -1,17 +1,12 @@
-type FormCardProps = {
-  nome: string;
-  url: string;
-  login: string;
-  senha: string;
-};
+import { FormTipo } from './type';
 
-function FormCard(dados: FormCardProps) {
-  const { nome, url, login, senha } = dados;
+function FormCard(dados: FormTipo) {
+  const { name, url, login, password } = dados;
   return (
     <li>
-      <p><a href={ url }>{ nome }</a></p>
+      <p><a href={ url }>{ name }</a></p>
       <p>{ login }</p>
-      <p>{ senha }</p>
+      <p>{ password }</p>
     </li>
   );
 }
