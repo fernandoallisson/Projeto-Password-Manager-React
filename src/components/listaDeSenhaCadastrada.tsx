@@ -1,9 +1,26 @@
+import { useState } from 'react';
 import FormCard from './FormCard';
 import { DadosTipo } from './type';
 
 function ListaDeSenhaCadastrada({ dados, handleLixo }: DadosTipo) {
+  const [mostrarSenha, setMostrarSenha] = useState(true);
+
+  const checked = () => {
+    setMostrarSenha(!mostrarSenha);
+  };
   return (
     <section id="Cards">
+      <section>
+        <label htmlFor="esconderSenhas">
+          Esconder senhas
+          {' '}
+          <input
+            type="checkbox"
+            onClick={ checked }
+            id="esconderSenhas"
+          />
+        </label>
+      </section>
       { dados.map((item) => (
         <ul key={ item.login }>
           <FormCard
@@ -13,6 +30,7 @@ function ListaDeSenhaCadastrada({ dados, handleLixo }: DadosTipo) {
             name={ item.name }
             password={ item.password }
             url={ item.url }
+            showPass={ mostrarSenha }
           />
           <button
             data-testid="remove-btn"

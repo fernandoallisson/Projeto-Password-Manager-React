@@ -5,6 +5,7 @@ export type FormTipo = {
   login: string;
   password: string;
   dadosSalvos?: object[]
+  showPass?: boolean
 };
 
 export type DadosTipo = {

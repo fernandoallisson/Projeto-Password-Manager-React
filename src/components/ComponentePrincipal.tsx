@@ -7,8 +7,10 @@ import Form from './Form';
 
 const cadastrada = 'Nenhuma senha cadastrada';
 const noCadastrada = '';
+
 function ComponentePrincipal() {
-  // Parte de Estados -------------------------------------------------------------------------------
+  // Parte de Estados ------------------------------------------------------------------------------
+
   const [dadosDoForm, setDadosDoForm] = useState({ // estado para o formulário
     id: '',
     name: '',
@@ -102,6 +104,7 @@ function ComponentePrincipal() {
       setListaDeDados(novoArray);
     }
   };
+
   return (
     <div>
       <section id="titulo">
