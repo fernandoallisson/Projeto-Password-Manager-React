@@ -1,0 +1,8 @@
+.corpoDaAplicacao{
+  background-color: rgb(56, 68, 64);
+  max-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  color: white;
+}

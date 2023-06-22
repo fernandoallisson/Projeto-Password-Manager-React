@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { FormProp } from './type';
 
 const senhaValida = 'valid-password-check';
@@ -13,6 +14,13 @@ function Form({
   senha,
   onSubmit,
 }: FormProp) {
+  const [mostrarSenha, setMostrarSenha] = useState('password');
+  const handleMostrarSenha = () => {
+    return mostrarSenha === 'password'
+      ? setMostrarSenha('text')
+      : setMostrarSenha('password');
+  };
+
   return (
     <form onSubmit={ onSubmit }>
       <section id="informacoesQueUsuarioDigita">
@@ -40,12 +48,18 @@ function Form({
           <label htmlFor="senha">
             Senha
             <input
-              type="password"
+              type={ mostrarSenha }
               id="senha"
               name="password"
               value={ dadosDoForm.password }
               onChange={ handleChangeSenha }
             />
+            <button
+              data-testid="show-hide-form-password"
+              onClick={ handleMostrarSenha }
+            >
+              Mostrar Senha
+            </button>
           </label>
           <div id="comandoSenhas">
             {senha.tamanhoMinimo ? (

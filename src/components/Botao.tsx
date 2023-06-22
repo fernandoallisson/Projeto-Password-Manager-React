@@ -1,3 +1,5 @@
+import './Botao.css';
+
 type BotaoCadastrarProp = {
   onClick: () => void;
   cadastrada: string
@@ -6,7 +8,7 @@ type BotaoCadastrarProp = {
 function BotaoCadastrar({ onClick, cadastrada }: BotaoCadastrarProp) {
   return (
     <>
-      <button onClick={ onClick }>Cadastrar nova senha</button>
+      <button className="button" onClick={ onClick }>Cadastrar nova senha</button>
       <h4>{cadastrada}</h4>
     </>
   );

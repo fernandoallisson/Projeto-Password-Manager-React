@@ -1,9 +1,11 @@
 import { useState } from 'react';
+import Swal from 'sweetalert2';
 import BotaoCadastrar from './Botao';
 import { FormTipo, SenhaTipo } from './type';
 import ListaDeSenhaCadastrada from './listaDeSenhaCadastrada';
 import Title from './titulo';
 import Form from './Form';
+import './ComponentePrincipal.css';
 
 const cadastrada = 'Nenhuma senha cadastrada';
 const noCadastrada = '';
@@ -92,6 +94,13 @@ function ComponentePrincipal() {
   const onClickDoCadastrar = () => {
     setListaDeDados((prevState) => [...prevState, dadosDoForm]);
     onClickDoLimparFormulario();
+    Swal.fire({
+      position: 'top-end',
+      icon: 'success',
+      title: 'Serviço cadastrado com sucesso',
+      showConfirmButton: false,
+      timer: 1500,
+    });
     setMostrarBotaoOuForm(false);
   };
   const handleLixo = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -106,7 +115,7 @@ function ComponentePrincipal() {
   };
 
   return (
-    <div>
+    <div className="corpoDaAplicacao">
       <section id="titulo">
         <Title titulo="Gerenciador de Senhas" />
       </section>
