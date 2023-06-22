@@ -5,7 +5,6 @@ import { FormTipo, SenhaTipo } from './type';
 import ListaDeSenhaCadastrada from './listaDeSenhaCadastrada';
 import Title from './titulo';
 import Form from './Form';
-import './ComponentePrincipal.css';
 
 const cadastrada = 'Nenhuma senha cadastrada';
 const noCadastrada = '';

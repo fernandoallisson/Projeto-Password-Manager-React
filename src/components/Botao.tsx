@@ -1,5 +1,3 @@
-import './Botao.css';
-
 type BotaoCadastrarProp = {
   onClick: () => void;
   cadastrada: string

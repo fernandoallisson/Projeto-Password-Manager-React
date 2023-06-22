@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import FormCard from './FormCard';
 import { DadosTipo } from './type';
-import './listasDeSenhaCadastradas.css';
 
 function ListaDeSenhaCadastrada({ dados, handleLixo }: DadosTipo) {
   const [mostrarSenha, setMostrarSenha] = useState(true);
